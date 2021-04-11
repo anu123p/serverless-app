@@ -5,8 +5,10 @@ export default class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      message: '',
+      username: '',
+      firstname: '',
+      lastname: '',
+      email: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -22,31 +24,59 @@ export default class Form extends Component {
   }
   async handleSubmit(event) {
     event.preventDefault();
-    const { name, message } = this.state;
-    await axios.post(
-      'https://i1xsjzkri4.execute-api.us-east-1.amazonaws.com/default/serverlessAppFunction',
-      { key1: `${name}, ${message}` }
-    );
+    const { username, firstname,lastname,email } = this.state;
+
+
+    const api = 'https://qen9j6ly9b.execute-api.us-east-1.amazonaws.com/default/adduser';
+    const data = { "key1": `${username}`,
+      "key2":`${firstname}`,
+      "key3":`${lastname}`,
+      "key4":`${email}` };
+    axios
+        .post(api, data)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   }
 
   render() {
+    console.log("Reached here"+ this.state);
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <label>Name:</label>
+          <label>Username:</label>
           <input
             type="text"
-            name="name"
+            name="username"
             onChange={this.handleChange}
-            value={this.state.name}
+            value={this.state.username}
           />
 
-          <label>Message:</label>
+          <label>firstname:</label>
           <input
             type="text"
-            name="message"
+            name="firstname"
             onChange={this.handleChange}
-            value={this.state.message}
+            value={this.state.firstname}
+          />
+
+          <label>Lastname:</label>
+          <input
+              type="text"
+              name="lastname"
+              onChange={this.handleChange}
+              value={this.state.lastname}
+          />
+
+          <label>Email:</label>
+          <input
+              type="text"
+              name="email"
+              onChange={this.handleChange}
+              value={this.state.email}
           />
 
           <button type="submit">Send</button>
