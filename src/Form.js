@@ -27,19 +27,28 @@ export default class Form extends Component {
     const { username, firstname,lastname,email } = this.state;
 
 
-    const api = 'https://qen9j6ly9b.execute-api.us-east-1.amazonaws.com/default/adduser';
-    const data = { "key1": `${username}`,
-      "key2":`${firstname}`,
-      "key3":`${lastname}`,
-      "key4":`${email}` };
-    axios
-        .post(api, data)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+
+
+    const api = 'https://16jf7g3elc.execute-api.us-east-1.amazonaws.com/default/addbooks';
+
+    const response = await fetch(api, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc
+      body: JSON.stringify({"title":"test","author":"test"}) // body data type must match "Content-Type" header
+    }).then(function(data){console.log(data);});
+
+
+    // const data = JSON.stringify({ "title":"test",
+    //   //"author":`test`,
+    //   //"key3":`test`,
+    //   "author":["test"] });
+    // axios
+    //     .post(api)
+    //     .then((response) => {
+    //       console.log(response);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
   }
 
   render() {
